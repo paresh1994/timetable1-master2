@@ -9,15 +9,9 @@
 import UIKit
 import SwiftSoup
 
-class ViewController: UIViewController{
-    
-    
-    
-    
-    
-    
-    
-    
+class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegate{
+  
+  
     @IBOutlet var groupn: UILabel!
     @IBOutlet weak var MyTableView: UITableView!
     
@@ -38,6 +32,25 @@ class ViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        self.MyTableView.delegate = self
+        self.MyTableView.dataSource = self
+        
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return ScheduleItem.count
+        }
+        
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? UITableViewCell
+            
+            
+        
+            cell?.textLabel?.text = timetable.zamen[indexPath.row]
+            return cell!
+        }
+        
+       
+        
         
         
         let url = URL(string: "http://ftp.sttec.yar.ru/pub/timetable/rasp_first.html")
@@ -104,7 +117,7 @@ class ViewController: UIViewController{
                                     }
                                     
                                     self.schedule.append(timetable)
-                                    print(self.schedule)
+                                    print(timetable.zamen)
                                 }
                             }
                             
