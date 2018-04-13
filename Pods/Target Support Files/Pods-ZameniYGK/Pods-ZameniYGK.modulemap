@@ -1,0 +1,6 @@
+framework module Pods_ZameniYGK {
+  umbrella header "Pods-ZameniYGK-umbrella.h"
+
+  export *
+  module * { export * }
+}
