@@ -36,23 +36,7 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
         self.MyTableView.delegate = self
         self.MyTableView.dataSource = self
         
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return ScheduleItem.count
-        }
-        
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? UITableViewCell
-            
-            
-        
-            cell?.textLabel?.text = timetable.zamen[indexPath.row]
-            return cell!
-        }
-        
-       
-        
-        
-        
+
         let url = URL(string: "http://ftp.sttec.yar.ru/pub/timetable/rasp_first.html")
         
         
@@ -147,7 +131,18 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
         
     }
     
-    
+      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return ScheduleItem.count
+        }
+        
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? UITableViewCell
+            
+            
+        
+            cell?.textLabel?.text = timetable.zamen[indexPath.row]
+            return cell!
+        }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
