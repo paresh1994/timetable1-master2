@@ -140,7 +140,7 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
             
             
         
-            cell?.textLabel?.text = timetable.zamen[indexPath.row]
+            cell?.textLabel?.text = schedule[indexPath.row].zamen
             return cell!
         }
     
