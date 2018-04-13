@@ -132,7 +132,7 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
     }
     
       func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return ScheduleItem.count
+            return schedule.count
         }
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
