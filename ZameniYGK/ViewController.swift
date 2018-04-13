@@ -135,13 +135,16 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
             return schedule.count
         }
         
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? UITableViewCell
-            
-            
+       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-            cell?.textLabel?.text = schedule[indexPath.row].zamen
-            return cell!
+         print(schedule[indexPath.row])
+      //  print(self.schedule[indexPath.row].zamen)
+        cell.textLabel?.text = schedule[indexPath.row].zamen
+        MyTableView.reloadData()
+        return cell
+      
+    
         }
     
     override func didReceiveMemoryWarning() {
