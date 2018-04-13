@@ -10,8 +10,8 @@ import UIKit
 import SwiftSoup
 
 class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegate{
-  
-  
+    
+    
     @IBOutlet var groupn: UILabel!
     @IBOutlet weak var MyTableView: UITableView!
     
@@ -32,11 +32,11 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         self.MyTableView.delegate = self
         self.MyTableView.dataSource = self
         
-
+        
         let url = URL(string: "http://ftp.sttec.yar.ru/pub/timetable/rasp_first.html")
         
         
@@ -56,44 +56,34 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
                             
                             let allRows = try tableBody?.select("tr").array()
                             
-                            for rowElement in allRows! {
-                                
-                                let timetable = ScheduleItem()
+                            
+                            for (allrowIndex,rowElement) in allRows!.enumerated() {
                                 
                                 let rowEntries = try rowElement.select("td").array()
                                 
+                                if allrowIndex == 0 {
+                                    continue
+                                }
+                                let timetable = ScheduleItem()
                                 for (index, column) in rowEntries.enumerated() {
                                     
                                     switch(index) {
                                         
                                     case 1:
-                                        
                                         timetable.number = try column.text()
                                         
-                                        let text1 = timetable.number
-                                        
-                                    //     print(text1)
                                     case 2:
                                         
                                         timetable.discipline = try column.text()
                                         
-                                        let text2 = timetable.discipline
-                                        
-                                    //     print(text2)
                                     case 3:
                                         
                                         timetable.zamen = try column.text()
                                         
-                                        let text3 = timetable.zamen
-                                        
-                                    //       print(text3)
                                     case 4:
                                         
                                         timetable.audit = try column.text()
                                         
-                                        let text4 = timetable.audit
-                                        
-                                        //      print(text4)
                                         
                                     default:
                                         break
@@ -101,11 +91,13 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
                                     }
                                     
                                     self.schedule.append(timetable)
-                                    print(timetable.zamen)
+                                    
                                 }
                             }
                             
-                            
+                            DispatchQueue.main.async {
+                                self.MyTableView.reloadData()
+                            }
                         }catch{
                             print(error.localizedDescription)
                         }
@@ -127,25 +119,18 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
         
         task.resume()
         
-        
-        
     }
     
-      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return schedule.count
-        }
-        
-       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-         print(schedule[indexPath.row])
-      //  print(self.schedule[indexPath.row].zamen)
-        cell.textLabel?.text = schedule[indexPath.row].zamen
-        MyTableView.reloadData()
-        return cell
-      
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return schedule.count
+    }
     
-        }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
+        cell.textLabel?.text = schedule[indexPath.row].zamen
+        return cell
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
